@@ -22,7 +22,7 @@ with open('./input.txt', 'r') as f:
 			line = input[current_line].strip()
 
 			while line != 'operations':
-				id = input[current_line].strip()
+				id = line
 				current_line += 1
 				line = input[current_line].strip()
 				matrix = []
@@ -48,16 +48,14 @@ def shunting_yard(expression: str):
 	for token in expression.replace(" ", ""):
 
 		if token in operators:
-			while (operator_stack and operator_stack[-1] != "(" and operators[token] <= operators[operator_stack[-1]]):
+			while (operator_stack and operators[token] <= operators[operator_stack[-1]]):
 				output_queue.append(operator_stack.pop())
 			operator_stack.append(token)
 
 		else:
 			output_queue.append(token)
 
-
-	while operator_stack:
-		output_queue.append(operator_stack.pop())
+	output_queue += operator_stack[::-1]
 
 	return output_queue
 
@@ -68,33 +66,16 @@ def evaluate_postfix(expression):
 		if token in operators:
 			operand2 = stack.pop()
 			operand1 = stack.pop()
-			result = perform_math(token, operand1, operand2)
+			result = token == "+" and add(operand1, operand2) or multiply(operand1, operand2)
 			stack.append(result)
 		else:
 			stack.append(matrices[token])
 
-	if stack:
-		return stack.pop()
-	else:
-		return ""
-
-
-def perform_math(operator, matA, matB):
-    if operator == "+":
-        return add(matA, matB)
-    elif operator == "*":
-        return multiply(matA, matB)
-
-
-def evaluate(sentence: str):
-    sentence = sentence.upper().strip()
-    postfix = shunting_yard(sentence)
-    result = evaluate_postfix(postfix)
-    return result
+	return stack and stack.pop() or ''
 
 
 for operation in operations:
-	result = evaluate(operation)
+	result = evaluate_postfix(shunting_yard(operation))
 	print(operation)
 	for i in result:
 		print(' '.join(map(str, i)))
