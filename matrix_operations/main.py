@@ -1,6 +1,6 @@
 matrices = {}
 operations = []
-operators = {"+": 1, "-": 1, "*": 2, "/": 2, "%":2, "^": 3}  #order of operations
+operators = {'+': 1, '-': 1, '*': 2, '/': 2, '%':2, '^': 3}  #order of operations
 
 def add(A, B):
 	return [[A[i][j] + B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
@@ -43,7 +43,7 @@ def shunting_yard(expression: str):
 	output_queue = []
 	operator_stack = [] 
 
-	for token in expression.replace(" ", ""):
+	for token in expression.replace(' ', ''):
 
 		if token in operators:
 			while (operator_stack and operators[token] <= operators[operator_stack[-1]]):
@@ -64,7 +64,7 @@ def evaluate_postfix(expression):
 		if token in operators:
 			operand2 = stack.pop()
 			operand1 = stack.pop()
-			result = token == "+" and add(operand1, operand2) or multiply(operand1, operand2)
+			result = token == '+' and add(operand1, operand2) or multiply(operand1, operand2)
 			stack.append(result)
 		else:
 			stack.append(matrices[token])
@@ -74,4 +74,4 @@ def evaluate_postfix(expression):
 
 for operation in operations:
 	result = evaluate_postfix(shunting_yard(operation))
-	print(operation + "\\n".join([" ".join(str(j) for j in i) for i in result]) + "\\n")
+	print(operation, '\n'.join([' '.join(str(j) for j in i) for i in result]), sep='\n', end='\n\n')
