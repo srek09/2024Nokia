@@ -1,6 +1,5 @@
 import re
-
-del_chars = ''.join(c for c in map(chr, range(1114111)) if not c.isalnum())
+del_chars = ''.join(c for c in map(chr, range(200)) if not c.isalnum())
 del_map = str.maketrans('', '', del_chars)
 
 
@@ -9,7 +8,6 @@ with open('./input.txt', 'r', encoding='utf-8') as f:
 
 for line in input:
 	line = line.translate(del_map).lower().strip()
-
 	unique_chars = len(set(line)) # Count unique characters
 	# This part of the code is checking whether the given `line` is a palindrome. Here's a breakdown of
 	# what each step does:
