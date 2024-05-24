@@ -1,5 +1,3 @@
-import re
-
 matrices = {}
 operations = []
 operators = {"+": 1, "-": 1, "*": 2, "/": 2, "%":2, "^": 3}  #order of operations
@@ -76,7 +74,4 @@ def evaluate_postfix(expression):
 
 for operation in operations:
 	result = evaluate_postfix(shunting_yard(operation))
-	print(operation)
-	for i in result:
-		print(' '.join(map(str, i)))
-	print()
+	print(operation + "\\n".join([" ".join(str(j) for j in i) for i in result]) + "\\n")
