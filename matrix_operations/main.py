@@ -96,3 +96,4 @@ for operation in operations:
   print(operation)
   for i in result:
     print(' '.join(map(str, i)))
+  print()
