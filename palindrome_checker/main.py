@@ -1,5 +1,5 @@
 import re
-del_chars = ''.join(c for c in map(chr, range(200)) if not c.isalnum())
+del_chars = ''.join(c for c in map(chr, range(8212)) if not c.isalnum())
 del_map = str.maketrans('', '', del_chars)
 
 
