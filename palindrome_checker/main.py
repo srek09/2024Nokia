@@ -15,12 +15,12 @@ for line in input:
 # If the characters are equal, I increment p1 and decrement p2 to check the next pair of characters until the 2 pointers meet.
   p1 = 0
   p2 = len(line) - 1
-  is_palindrome = True
+  is_palindrome = 'YES'
   while p1 <= p2:
     if line[p1] != line[p2]:
-      is_palindrome = False
+      is_palindrome = 'NO'
       unique_chars = -1
       break
     p1 += 1
     p2 -= 1
-  print(f"{is_palindrome and 'YES' or 'NO'}, {unique_chars}")
+  print(f"{is_palindrome}, {unique_chars}")
