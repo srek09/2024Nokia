@@ -1,9 +1,8 @@
 import re
-
-pattern = re.compile('\W')
+pattern = re.compile('[\W_]+')
 with open('./input.txt', 'r', encoding='utf-8') as f:
   input = f.readlines()
-
+counter = 0
 for line in input:
   line = re.sub(pattern, '', line).lower().strip()
   unique_chars = len(set(line))
@@ -17,4 +16,5 @@ for line in input:
       break
     p1 += 1
     p2 -= 1
-  print(f"{is_palindrome and 'YES' or 'NO'}, {unique_chars}")
+  counter += 1
+  print(f"{counter}. {is_palindrome and 'YES' or 'NO'}, {unique_chars}")
