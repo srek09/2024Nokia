@@ -1,7 +1,5 @@
-import re
 del_chars = ''.join(c for c in map(chr, range(8212)) if not c.isalnum())
 del_map = str.maketrans('', '', del_chars)
-
 
 with open('./input.txt', 'r', encoding='utf-8') as f:
 	input = f.readlines()
@@ -15,7 +13,6 @@ for line in input:
 	p1 = 0
 	p2 = len(line) - 1
 	is_palindrome = 'YES'
-
 	while p1 <= p2:
 		# I compare the characters at the two pointers. If they are not equal, the given string is not a palindrome therefore I can stop and move on to the next one.
 		if line[p1] != line[p2]:
