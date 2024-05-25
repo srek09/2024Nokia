@@ -1,6 +1,4 @@
-from typing import  Iterator, TypeVar
 from heapq import heappush, heappop
-
 class Maze:
 	def __init__(self, id, walls, weights, start, goal, rows, cols):
 		if len(weights) > 0:
@@ -17,7 +15,7 @@ class Maze:
 
 	passable = lambda self, id: id not in self.walls
 
-	def in_bounds(self, id) -> bool:
+	def in_bounds(self, id):
 		(x, y) = id
 		return 0 <= x < self.cols and 0 <= y < self.rows
 
@@ -25,14 +23,12 @@ class Maze:
 	def neighbors(self, id):
 		(x, y) = id
 		neighbors = [(x+1, y), (x-1, y), (x, y-1), (x, y+1)]
-		if (x + y) % 2 == 0: neighbors.reverse()
 		results = filter(self.in_bounds, neighbors)
 		results = filter(self.passable, results)
 		return results
 
 
 mazes = []
-heuristic = lambda a, b: abs(a[0] - b[0]) + abs(a[1] - b[1])
 
 with open('./input.txt', 'r') as f:
 	walls, start, goal, current_line, rows = [], None, None, 0, 1
@@ -70,10 +66,10 @@ with open('./input.txt', 'r') as f:
 
 	mazes.append(Maze(id, walls, weights, start, goal, rows, current_line ))
 
+
 class PriorityQueue:
     def __init__(self):
         self.elements = []
-
 
     empty = lambda self: not self.elements
 
@@ -82,7 +78,6 @@ class PriorityQueue:
     get = lambda self: heappop(self.elements)[1]
 
 def get_path(came_from, start, goal):
-
 	current = goal
 	path = ['G']
 	if goal not in came_from: 
@@ -98,41 +93,36 @@ def get_path(came_from, start, goal):
 			path.append('L')
 		current = came_from[current]
 	path.append('S')
-	path.reverse()
-	return ' '.join(path)
-
-
-heuristic = lambda a, b: abs(a[0] - b[0]) + abs(a[1] - b[1])
+	return ' '.join(path[::-1])
 
 def solve_maze(graph):
-    start = graph.start
-    goal = graph.goal
-    frontier = PriorityQueue()
-    frontier.put(start, 0)
-    came_from = {}
-    cost_so_far = {}
-    came_from[start] = None
-    cost_so_far[start] = 0
-    
-    while not frontier.empty():
-        current = frontier.get()
-        
-        if current == goal:
-            break
-        
-        for next in graph.neighbors(current):
-            new_cost = cost_so_far[current] + graph.cost(next)
-            if next not in cost_so_far or new_cost < cost_so_far[next]:
-                cost_so_far[next] = new_cost
-                priority = new_cost + heuristic(next, goal)
-                frontier.put(next, priority)
-                came_from[next] = current
-    
-    return came_from
+	start = graph.start
+	goal = graph.goal
+	frontier = PriorityQueue()
+	frontier.put(start, 0)
+	came_from = {}
+	cost_so_far = {}
+	came_from[start] = None
+	cost_so_far[start] = 0
+
+	while not frontier.empty():
+		current = frontier.get()
+		if current == goal:
+			break
+
+		for next in graph.neighbors(current):
+			new_cost = cost_so_far[current] + graph.cost(next)
+			if next not in cost_so_far or new_cost < cost_so_far[next]:
+				cost_so_far[next] = new_cost
+				priority = new_cost + abs(next[0] - goal[0]) + abs(next[1] - goal[1])
+				frontier.put(next, priority)
+				came_from[next] = current
 
 
-print('\n\n'.join([(maze.id + '\n' + get_path(solve_maze(maze), start=maze.start, goal=maze.goal)) for maze in mazes]))
+	return came_from
 
+
+print('\n\n'.join([maze.id + '\n' + get_path(solve_maze(maze), start=maze.start, goal=maze.goal) for maze in mazes]))
 
 
 
