@@ -84,7 +84,7 @@ class PriorityQueue:
 def get_path(came_from, start, goal):
 
 	current = goal
-	path = []
+	path = ['G']
 	if goal not in came_from: 
 		return []
 	while current != start:
@@ -97,6 +97,7 @@ def get_path(came_from, start, goal):
 		elif current[1] < came_from[current][1]:
 			path.append('L')
 		current = came_from[current]
+	path.append('S')
 	path.reverse()
 	return ' '.join(path)
 
@@ -130,4 +131,8 @@ def solve_maze(graph):
     return came_from
 
 
-[print(maze.id, get_path(solve_maze(maze), start=maze.start, goal=maze.goal), sep='\n', end='\n\n') for maze in mazes]
+print('\n\n'.join([(maze.id + '\n' + get_path(solve_maze(maze), start=maze.start, goal=maze.goal)) for maze in mazes]))
+
+
+
+
