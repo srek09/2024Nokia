@@ -1,6 +1,6 @@
 matrices = {}
 operations = []
-operators = {'+': 1, '-': 1, '*': 2, '/': 2, '%':2, '^': 3}  #order of operations
+operators = {'+': 1, '*': 2}
 
 def add(A, B):
 	return [[A[i][j] + B[i][j] for j in range(len(A[0]))] for i in range(len(A))]
@@ -39,7 +39,7 @@ with open('./input.txt', 'r') as f:
 		current_line += 1
 
 
-def shunting_yard(expression: str):
+def shunting_yard(expression):
 	output_queue = []
 	operator_stack = [] 
 
