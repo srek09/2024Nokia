@@ -34,7 +34,7 @@ class Maze:
 mazes = []
 heuristic = lambda a, b: abs(a[0] - b[0]) + abs(a[1] - b[1])
 
-with open('./maze_solver/input.txt', 'r') as f:
+with open('./input.txt', 'r') as f:
 	walls, start, goal, current_line, rows = [], None, None, 0, 1
 	id = ''
 	weights = {}
