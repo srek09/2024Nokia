@@ -11,20 +11,15 @@ class Maze:
 			self.cols = cols
 
 
-	cost = lambda self, to_node: self.weights.get(to_node, 1)
-
-	passable = lambda self, id: id not in self.walls
-
 	def in_bounds(self, id):
 		(x, y) = id
-		return 0 <= x < self.cols and 0 <= y < self.rows
+		return 0 <= x < self.cols and 0 <= y < self.rows and id not in self.walls
 
 
 	def neighbors(self, id):
 		(x, y) = id
 		neighbors = [(x+1, y), (x-1, y), (x, y-1), (x, y+1)]
-		results = filter(self.in_bounds, neighbors)
-		results = filter(self.passable, results)
+		results = [(node, self.weights.get(node, 1)) for node in filter(self.in_bounds, neighbors)]
 		return results
 
 
@@ -82,6 +77,7 @@ def get_path(came_from, start, goal):
 	path = ['G']
 	if goal not in came_from: 
 		return []
+
 	while current != start:
 		if current[0] > came_from[current][0]:	
 			path.append('D')
@@ -92,6 +88,7 @@ def get_path(came_from, start, goal):
 		elif current[1] < came_from[current][1]:
 			path.append('L')
 		current = came_from[current]
+
 	path.append('S')
 	return ' '.join(path[::-1])
 
@@ -110,8 +107,8 @@ def solve_maze(graph):
 		if current == goal:
 			break
 
-		for next in graph.neighbors(current):
-			new_cost = cost_so_far[current] + graph.cost(next)
+		for (next, cost) in graph.neighbors(current):
+			new_cost = cost_so_far[current] + cost
 			if next not in cost_so_far or new_cost < cost_so_far[next]:
 				cost_so_far[next] = new_cost
 				priority = new_cost + abs(next[0] - goal[0]) + abs(next[1] - goal[1])
@@ -123,6 +120,3 @@ def solve_maze(graph):
 
 
 print('\n\n'.join([maze.id + '\n' + get_path(solve_maze(maze), start=maze.start, goal=maze.goal) for maze in mazes]))
-
-
-
