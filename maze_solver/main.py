@@ -1,3 +1,10 @@
+'''for this task, I used the A* algorithm (solve_maze function) to solve the maze.
+The A* algorithm is efficient and guarantees the shortest path from the start to the goal node.
+The function takes a maze object as an argument and returns the shortest path from the start to the goal node.
+The get_path function is used to convert the dictionary into a string representation of the path.
+The main function reads the input file, creates a list of maze objects, and solves them.
+'''
+
 from heapq import heappush, heappop
 class Maze:
 	def __init__(self, id, walls, weights, start, goal, rows, cols):
@@ -10,55 +17,55 @@ class Maze:
 			self.rows = rows
 			self.cols = cols
 
-
+	# checks if a node is within the bounds of the maze and not a wall
 	def in_bounds(self, id):
 		(x, y) = id
 		return 0 <= x < self.cols and 0 <= y < self.rows and id not in self.walls
 
-
+	# returns the neighbors of a node
 	def neighbors(self, id):
 		(x, y) = id
 		neighbors = [(x+1, y), (x-1, y), (x, y-1), (x, y+1)]
-		results = [(node, self.weights.get(node, 1)) for node in filter(self.in_bounds, neighbors)]
+		results = [(node, self.weights.get(node, 1)) for node in neighbors if self.in_bounds(node)]
 		return results
 
 
 mazes = []
 
 with open('./input.txt', 'r') as f:
-	walls, start, goal, current_line, rows = [], None, None, 0, 1
-	id = ''
-	weights = {}
+    
+	id, walls, weights, start, goal, rows, current_line = '', [], {}, None, None, 1, 0
 	for line in f:
 		line = line.strip().replace(' ', '')
-		if len(line) < 2:
-			if len(line) > 0:
+		if len(line) < 2: # if the line is empty or contains only the maze id
+			if len(line) > 0: # if the line contains the maze id we assign it to the current maze
 				id = line
 			rows -= 1
+			# this scenario appears when it is the end of the maze
 			if walls != [] and (len(mazes) == 0 or len(mazes[-1].walls) > 0):
 				mazes.append(Maze(id, walls, weights, start, goal, rows, current_line))
 				weights = {}
 				walls = []
 				current_line = 0
 				rows = 0
-		else:
+		else: # if the line contains part of the maze
 			char_idx = 0
 			for char in line:
-				if char == '.':
-					weights[(current_line, char_idx)] = 1
-				elif char == '#':
-					walls.append((current_line, char_idx))	
-				elif char == 'S':
-					start = (current_line, char_idx)
-				elif char == 'G':
-					goal = (current_line, char_idx)
+				match char: # we check the character and assign the corresponding value to the maze object
+					case '.':
+						weights[(current_line, char_idx)] = 1
+					case '#':
+						walls.append((current_line, char_idx))
+					case 'S':	
+						start = (current_line, char_idx)
+					case 'G':
+						goal = (current_line, char_idx)
 				char_idx += 1
 
 			current_line += 1
 
 		rows += 1
-
-
+	# we add the last maze to the list
 	mazes.append(Maze(id, walls, weights, start, goal, rows, current_line ))
 
 
@@ -72,7 +79,9 @@ class PriorityQueue:
 
     get = lambda self: heappop(self.elements)[1]
 
-def get_path(came_from, start, goal):
+
+# return the directions from the start to the goal node
+def get_path(came_from, start, goal): 
 	current = goal
 	path = ['G']
 	if goal not in came_from: 
@@ -92,9 +101,10 @@ def get_path(came_from, start, goal):
 	path.append('S')
 	return ' '.join(path[::-1])
 
-def solve_maze(graph):
-	start = graph.start
-	goal = graph.goal
+
+def solve_maze(maze):
+	start = maze.start
+	goal = maze.goal
 	frontier = PriorityQueue()
 	frontier.put(start, 0)
 	came_from = {}
@@ -107,7 +117,7 @@ def solve_maze(graph):
 		if current == goal:
 			break
 
-		for (next, cost) in graph.neighbors(current):
+		for (next, cost) in maze.neighbors(current):
 			new_cost = cost_so_far[current] + cost
 			if next not in cost_so_far or new_cost < cost_so_far[next]:
 				cost_so_far[next] = new_cost
@@ -118,5 +128,5 @@ def solve_maze(graph):
 
 	return came_from
 
-
+# print the path for each maze
 print('\n\n'.join([maze.id + '\n' + get_path(solve_maze(maze), start=maze.start, goal=maze.goal) for maze in mazes]))
