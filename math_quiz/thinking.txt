@@ -1,0 +1,98 @@
+1:
+    A lámpát pont szerű testnek tekintve megkapjuk hogy a vonat a saját hosszát (továbbiakban x) 5s alatt teszi meg.
+    20s alatt 300m + x távolságot tesz meg. 5s alatt x tehát 15s 300m szóval 1s alatt 20m-t tesz meg.
+    Innen következik hogy 5s alatt 100m-t tesz meg, ami a vonat hossza.
+
+
+2:
+  A:
+    Szorzásnál általánosságban igaz, hogy a kisebb tényezőt változtatva radikálisabb a változás hiszen nagyobb arányban változik.
+    Ebből kifolyólag mindig a kockánk legkisebb oldalát kell növelni:
+    a 2cm-es kockákat egymás mellé tesszük így a kapott téglatest 2x2x4cm.
+    Utána a 4 cm-es oldalélre a 8 centiméterest illesztjük. Az így kivágható test 2x4x10 cm.
+    Ezután a 6 cm-eset a 4 és a 8 cm-es oldalhoz érintjük. Az így kapott test 4x8x10 cm ami 320 cm^3.
+    Az alábbi linken egy geogebrában készült vázlat látható a testekről: https://imgur.com/ZWELyvL
+
+  B:
+    Mivel a feladat szövegéből egyértelműen nem derül ki, hogy mindet fel kell-e használni ezért a legjobb eset ha csak a 8x8x8-as kockát vesszük,
+    ami 512cm^3 marcipánt jelent.
+
+
+3:
+    A két gyerek adataiból a következő egyenlet írható fel:
+    x / 10 + (20 - x) / 4 = (x / 5) + (20 - x) / 12
+
+    Egyszerűsítések után:
+    (100 - 3x)/20 = (14x + 200) / 120
+
+    120-szal felszorzunk, majd egyik oldalra rendezzük a számokat a másikra pedig x-et:
+    32x = 400
+    x = 12.5
+
+    Tehát Juliskának 12.5 km-t kell bicikliznie.
+
+
+4:
+    a kör egyenletét a következő képpen írhatjuk fel:
+    x^2 + y^2 = 5^2
+    ahhoz hogy rácspontot kapjunk x és y is egész kell legyen:
+    a fenti egyenlet egy pitagoraszi számhármas negatív számokra kiterjesztett változata:
+    x = +-4; y = +-3 vagy x = +-3; y = +-4
+    illetve a tengelyeken x = +-5; y = 0 vagy x = 0; y = +-5
+    ezekből az alábbi 12 kombinációt lehet létrehozni:
+    (5; 0), (4; 3), (3; 4), (0; 5), (-3; 4), (-4; 3), (-5; 0), (-4; -3), (-3; -4), (0; -5), (3; -4), (4; -3)
+
+
+5:
+    AB = d
+    1. d szakasz hosszát kiszámoljuk: 
+        d = sqrt(3^2 + 4^2) = 5
+        a rá vetített egyenes egyenlete: 4x + 3y = 12 
+
+    2. területe: 
+        d * Mc / 2 = 14
+        Mc = 2.8
+
+    3. d egyenesre merőmeges i egyenest húzunk. 
+        az egyenes normál vektora megegyezik d szakaszra vetített egyenesének irányvektorával,
+        innen következik, hogy az egyenlete: -3x + 4y = 16
+
+    4. A pontból 2.8 cm sugarú kört veszünk fel.
+        az alábbi egyenletrendszert megoldva kapjuk meg a 2 metszéspontot amiből a pozitív x kell nekünk.
+        ,|-3x + 4y = 16
+        `|x^2 + (y - 4)^2 = 7.84
+        D = (2.24, 5.68)
+
+    5. j egyenest ami d egyenessel páruzamos és D ponton áthalad,
+       d normálvektorát felhasználva az alábbi egyenlettel irhatjuk le: 2.24x + 1.68y = 14.56
+
+    6. j és f egyenes metszéspontját, ami a háromszög 3. pontja, így kapjuk meg.
+        ,| y = 6
+        `| 2.24x + 1.68y = 14.56
+          az egyenletrendszer megoldása x = 2
+        Szóval A keresett pont: C=(2; 6)
+
+6:
+
+
+
+7:
+    legrosszabb esetben 21 golyót kell kihúzni a 30-ból hogy biztosan legyen 1 piros.
+    Ez azt jelenti, hogy 20 nem piros golyó van tehát 10 piros.
+
+
+8:
+    1 négyzet területe 1 cm^2
+    a 2 átlón külön-külön összesen 85 + 1 (mert a közepét 2x kell számolni)
+    1 átlón 43db kocka élenként 1 cm tehát a nagy négyzet 43*43cm ami 1849 cm^2
+
+
+9:
+    o: összesen
+    o(o-1) = 198 + 308 
+    o^2-o = 506
+    o^2-o-506 = 0
+    o1 = -22, o2 = 23
+    o1 nem megoldás mert nem lehetnek negatívan tehát 23-an voltak összesen
+    198 / 23 = 9
+    tehát 9 angol volt a találkozón
